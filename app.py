@@ -7,7 +7,7 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 
-from RealTimeSkinDetection import process_video_frame, get_camera
+from RealTimeSkinDetection import process_video_frame, get_camera, load_and_prep
 
 IMAGE_SHAPE = (224, 224)
 classes = ["Dry Skin", "Oily Skin"]
@@ -101,7 +101,7 @@ def camera_input():
                 st.write("Predicted Skin type :")
                 with st.spinner("Classifying....."):
                     try:
-                        img = load_and_prep_image(img_pred)
+                        img = load_and_prep(img_pred)
                         if img is not None:
                             label = model.predict(tf.expand_dims(img, axis=0))
                             st.write(classes[int(tf.argmax(tf.squeeze(label).numpy()))])
